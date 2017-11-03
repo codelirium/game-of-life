@@ -27,7 +27,7 @@ public class StartLife implements CommandLineRunner {
 
 		while(true) {
 
-			sleep(300);
+			sleep(300L);
 
 
 			earth.nextWorldOrder();

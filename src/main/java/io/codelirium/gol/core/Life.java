@@ -2,7 +2,10 @@ package io.codelirium.gol.core;
 
 import io.codelirium.gol.model.Agent;
 
+import java.util.Arrays;
+
 import static java.lang.System.out;
+import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
 
 
@@ -63,14 +66,10 @@ public class Life {
 
 	public void nextWorldOrder() {
 
-		for (Agent[] row : world) {
-
-			for (Agent agent : row) {
-
-				decideAgentLifeStatus(world, agent);
-
-			}
-		}
+		asList(world)
+			.parallelStream()
+				.flatMap(Arrays::stream)
+					.forEach(agent -> decideAgentLifeStatus(world, agent));
 
 		generation++;
 	}
@@ -92,24 +91,12 @@ public class Life {
 
 	protected long getPopulation() {
 
-		long population = 0L;
+		return asList(world)
+					.parallelStream()
+						.flatMap(Arrays::stream)
+						.filter(agent -> nonNull(agent) && agent.isAlive())
+						.count();
 
-		for (int x = 0; x < world.length; x++) {
-
-			for (int y = 0; y < world[x].length; y++) {
-
-				Agent agent = world[x][y];
-
-				if (nonNull(agent) && agent.isAlive()) {
-
-					population++;
-
-				}
-			}
-		}
-
-
-		return population;
 	}
 
 	protected static void decideAgentLifeStatus(Agent[][] world, Agent agent){
