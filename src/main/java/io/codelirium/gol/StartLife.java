@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+import static java.lang.Thread.sleep;
+
 
 @SpringBootApplication
 public class StartLife implements CommandLineRunner {
@@ -22,7 +24,7 @@ public class StartLife implements CommandLineRunner {
 
 		while(true) {
 
-			Thread.sleep(200);
+			sleep(300);
 
 
 			earth.nextWorldOrder();

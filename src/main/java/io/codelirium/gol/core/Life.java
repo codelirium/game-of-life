@@ -113,27 +113,27 @@ public class Life {
 
 	protected static void decideAgentLifeStatus(Agent[][] world, Agent agent){
 
-		int     x       = agent.getX();
-		int     y       = agent.getY();
+		int     myX       = agent.getX();
+		int     myY       = agent.getY();
 		boolean isAlive = agent.isAlive();
 
 		int liveCount = 0;
 
-		for (int r = -1; r <= 1; r++) {
+		for (int xOffset = -1; xOffset <= 1; xOffset++) {
 
-			int currentRow = x + r;
+			int neighborX = myX + xOffset;
 
-			currentRow = (currentRow < 0)? world.length - 1: currentRow;
-			currentRow = (currentRow >= world.length)? 0 : currentRow;
+			neighborX = (neighborX < 0)? world.length - 1: neighborX;
+			neighborX = (neighborX >= world.length)? 0 : neighborX;
 
-			for (int c = -1; c <= 1; c++) {
+			for (int yOffset = -1; yOffset <= 1; yOffset++) {
 
-				int currentCol = y + c;
+				int neighborY = myY + yOffset;
 
-				currentCol = (currentCol < 0)? world[0].length - 1: currentCol;
-				currentCol = (currentCol >= world[0].length)? 0 : currentCol;
+				neighborY = (neighborY < 0)? world[0].length - 1: neighborY;
+				neighborY = (neighborY >= world[0].length)? 0 : neighborY;
 
-				Agent neighbor = world[currentRow][currentCol];
+				Agent neighbor = world[neighborX][neighborY];
 
 				if (neighbor.isAlive()) {
 
@@ -153,18 +153,18 @@ public class Life {
 
 		if (liveCount == 2 && isAlive) {
 
-			world[x][y].setAlive(true);
+			world[myX][myY].setAlive(true);
 
 			return;
 
 		} else if (liveCount == 3) {
 
-			world[x][y].setAlive(true);
+			world[myX][myY].setAlive(true);
 
 			return;
 		}
 
 
-		world[x][y].setAlive(false);
+		world[myX][myY].setAlive(false);
 	}
 }
