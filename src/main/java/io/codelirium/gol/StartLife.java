@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+import static java.lang.Runtime.getRuntime;
+import static java.lang.System.out;
 import static java.lang.Thread.sleep;
 
 
@@ -17,10 +19,11 @@ public class StartLife implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws InterruptedException {
 
-		Life earth = new Life(60, 60, 0.08);
+		Life earth = new Life(60, 60, 0.1D);
 
 		earth.drawWorld();
 
+		setUpApocalypse(earth);
 
 		while(true) {
 
@@ -29,13 +32,23 @@ public class StartLife implements CommandLineRunner {
 
 			earth.nextWorldOrder();
 
-			System.out.print(CLEAR_SCREEN);
+			out.print(CLEAR_SCREEN);
 
 			earth.drawWorld();
 		}
 	}
 
+	private void setUpApocalypse(Life life) {
 
+		getRuntime().addShutdownHook(new Thread() {
+
+			public void run() {
+
+				life.apocalypse();
+
+			}
+		});
+	}
 
 	public static void main(String[] args) {
 

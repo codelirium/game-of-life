@@ -2,6 +2,7 @@ package io.codelirium.gol.core;
 
 import io.codelirium.gol.model.Agent;
 
+import static java.lang.System.out;
 import static java.util.Objects.nonNull;
 
 
@@ -12,12 +13,12 @@ public class Life {
 	private long generation;
 
 
-	public Life(int width, int height, double sparsityFactor) {
+	public Life(int width, int height, double densityFactor) {
 
 		this.world = new Agent[width][height];
 		this.generation = 0L;
 
-		initializeWorld(sparsityFactor);
+		initializeWorld(densityFactor);
 	}
 
 
@@ -48,15 +49,15 @@ public class Life {
 
 			for (Agent agent : row) {
 
-				System.out.print(agent.isAlive() ? "O " : ". ");
+				out.print(agent.isAlive() ? "O " : ". ");
 
 			}
 
-			System.out.println();
+			out.println();
 		}
 
-		System.out.println("Generation: #" + getGeneration());
-		System.out.println("Population: #" + getPopulation());
+		out.println("Generation: #" + getGeneration());
+		out.println("Population: #" + getPopulation());
 	}
 
 
@@ -113,8 +114,8 @@ public class Life {
 
 	protected static void decideAgentLifeStatus(Agent[][] world, Agent agent){
 
-		int     myX       = agent.getX();
-		int     myY       = agent.getY();
+		int     myX     = agent.getX();
+		int     myY     = agent.getY();
 		boolean isAlive = agent.isAlive();
 
 		int liveCount = 0;
@@ -166,5 +167,12 @@ public class Life {
 
 
 		world[myX][myY].setAlive(false);
+	}
+
+	public void apocalypse() {
+
+		world = null;
+
+		out.println("kaboom!");
 	}
 }
